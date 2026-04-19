@@ -5,11 +5,13 @@
 package com.smartcampus;
 
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import org.glassfish.jersey.server.ResourceConfig;
 
 @ApplicationPath("/api/v1")
-public class ApplicationConfig extends Application {
-    // JAX-RS will automatically scan and register all 
-    // resource classes and providers in the project.
-    // No extra configuration needed here.
+public class ApplicationConfig extends ResourceConfig {
+
+    public ApplicationConfig() {
+        // This tells Jersey to scan ALL sub-packages under com.smartcampus
+        packages("com.smartcampus");
+    }
 }
