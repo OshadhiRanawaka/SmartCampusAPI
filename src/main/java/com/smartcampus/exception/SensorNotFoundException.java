@@ -4,10 +4,10 @@
  */
 package com.smartcampus.exception;
 
-/**
- *
- * @author User
- */
-public class SensorNotFoundException {
+
+public class SensorNotFoundException extends RuntimeException {
     
+    public SensorNotFoundException(String sensorId) {
+        super("Sensor with ID '" + sensorId + "' was not found.");
+    }
 }

@@ -4,10 +4,29 @@
  */
 package com.smartcampus.exception;
 
-/**
- *
- * @author User
- */
-public class SensorNotFoundExceptionMapper {
+import java.util.HashMap;
+import java.util.Map;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
+
+@Provider
+public class SensorNotFoundExceptionMapper implements ExceptionMapper<SensorNotFoundException> {
+    
+    @Override
+    public Response toResponse(SensorNotFoundException exception){
+        
+        Map<String, Object> error = new HashMap<>();
+        error.put("status", 404);
+        error.put("error", "Not Found");
+        error.put("message", exception.getMessage());
+
+        return Response
+                .status(Response.Status.NOT_FOUND) // 404
+                .entity(error)
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+    }
     
 }

@@ -4,10 +4,12 @@
  */
 package com.smartcampus.exception;
 
-/**
- *
- * @author User
- */
-public class SensorUnavailableException {
+
+public class SensorUnavailableException extends RuntimeException {
     
+    public SensorUnavailableException(String sensorId, String status) {
+        super("Sensor '" + sensorId + "' cannot accept readings. " +
+              "Current status is: " + status + ". " +
+              "Only ACTIVE sensors can receive new readings.");
+    }
 }
