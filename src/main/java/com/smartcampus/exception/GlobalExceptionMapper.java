@@ -4,8 +4,7 @@
  */
 package com.smartcampus.exception;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.smartcampus.model.ErrorResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.MediaType;
@@ -25,14 +24,15 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
         // Log the FULL stack trace internally on the server
         LOGGER.log(Level.SEVERE, "Unexpected server error: ", exception);
 
+        ErrorResponse error = new ErrorResponse(
+            500,
+            "Internal Server Error",
+            "An unexpected error occurred on the server. " +
+            "Please contact the system administrator.",
+            "If this issue persists, reference the server logs with timestamp: " +
+            java.time.Instant.now().toString()
+        );
         
-        Map<String, Object> error = new HashMap<>();
-        error.put("status", 500);
-        error.put("error", "Internal Server Error");
-        error.put("message", "An unexpected error occurred on the server. " +
-                             "Please contact the system administrator.");
-        error.put("documentation", "http://localhost:8080/SmartCampusAPI/api/v1");
-
         return Response
                 .status(Response.Status.INTERNAL_SERVER_ERROR) // 500
                 .entity(error)

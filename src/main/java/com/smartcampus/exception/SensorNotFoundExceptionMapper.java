@@ -4,8 +4,7 @@
  */
 package com.smartcampus.exception;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.smartcampus.model.ErrorResponse;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -17,10 +16,12 @@ public class SensorNotFoundExceptionMapper implements ExceptionMapper<SensorNotF
     @Override
     public Response toResponse(SensorNotFoundException exception){
         
-        Map<String, Object> error = new HashMap<>();
-        error.put("status", 404);
-        error.put("error", "Not Found");
-        error.put("message", exception.getMessage());
+        ErrorResponse error = new ErrorResponse(
+            404,
+            "Not Found",
+            exception.getMessage(),
+            "Use GET /api/v1/sensors to see all available sensor IDs."
+        );
 
         return Response
                 .status(Response.Status.NOT_FOUND) // 404

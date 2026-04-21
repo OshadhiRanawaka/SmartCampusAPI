@@ -4,8 +4,7 @@
  */
 package com.smartcampus.exception;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.smartcampus.model.ErrorResponse;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -17,11 +16,13 @@ public class RoomNotEmptyExceptionMapper implements ExceptionMapper<RoomNotEmpty
     @Override
     public Response toResponse(RoomNotEmptyException exception){
         
-        Map<String, Object> error = new HashMap<>();
-        error.put("status", 409);
-        error.put("error", "Conflict");
-        error.put("message", exception.getMessage());
-        error.put("hint", "Remove or reassign all sensors from this room before deleting it.");
+        ErrorResponse error = new ErrorResponse(
+            409,
+            "Conflict",
+            exception.getMessage(),
+            "Remove or reassign all sensors from this room before attempting deletion. " +
+            "Use GET /api/v1/rooms/{roomId} to see which sensors are assigned."
+        );
         
         return Response
                 .status(Response.Status.CONFLICT) // 409

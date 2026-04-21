@@ -4,8 +4,7 @@
  */
 package com.smartcampus.exception;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.smartcampus.model.ErrorResponse;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -17,11 +16,13 @@ public class SensorUnavailableExceptionMapper implements ExceptionMapper<SensorU
     @Override
     public Response toResponse(SensorUnavailableException exception){
         
-        Map<String, Object> error = new HashMap<>();
-        error.put("status", 403);
-        error.put("error", "Forbidden");
-        error.put("message", exception.getMessage());
-        error.put("hint", "Change the sensor status to ACTIVE before posting readings.");
+        ErrorResponse error = new ErrorResponse(
+            403,
+            "Forbidden",
+            exception.getMessage(),
+            "Update the sensor status to ACTIVE before posting readings. " +
+            "Sensors in MAINTENANCE or OFFLINE state cannot record data."
+        );
 
         return Response
                 .status(Response.Status.FORBIDDEN) // 403

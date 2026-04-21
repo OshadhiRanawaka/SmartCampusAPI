@@ -4,8 +4,7 @@
  */
 package com.smartcampus.exception;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.smartcampus.model.ErrorResponse;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -17,13 +16,13 @@ public class LinkedResourceNotFoundExceptionMapper implements ExceptionMapper<Li
     @Override
     public Response toResponse(LinkedResourceNotFoundException exception){
         
-        Map<String, Object> error = new HashMap<>();
-        error.put("status", 422);
-        error.put("error", "Unprocessable Entity");
-        error.put("message", exception.getMessage());
-        error.put("hint", "The roomId you provided does not exist. " +
-                          "Please create the room first before registering a sensor.");
-        error.put("documentation", "http://localhost:8080/SmartCampusAPI/api/v1");
+        ErrorResponse error = new ErrorResponse(
+            422,
+            "Unprocessable Entity",
+            exception.getMessage(),
+            "Create the room first using POST /api/v1/rooms, " +
+            "then register the sensor with that room's ID."
+        );
         
         // 422 Unprocessable Entity
         return Response
