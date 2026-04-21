@@ -42,8 +42,12 @@ public class SensorReadingResource {
             readingList = new ArrayList<>();
         }
 
+        Sensor sensor = DataStore.sensors.get(sensorId);
+        
         Map<String, Object> response = new HashMap<>();
         response.put("sensorId", sensorId);
+        response.put("sensorType", sensor.getType());
+        response.put("currentValue", sensor.getCurrentValue());
         response.put("totalReadings", readingList.size());
         response.put("readings", readingList);
 
@@ -97,6 +101,7 @@ public class SensorReadingResource {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Reading added successfully.");
         response.put("sensorId", sensorId);
+        response.put("recordedValue", newReading.getValue());
         response.put("updatedCurrentValue", sensor.getCurrentValue());
         response.put("reading", newReading);
 
