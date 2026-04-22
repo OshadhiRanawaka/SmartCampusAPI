@@ -1,7 +1,6 @@
 # Smart Campus Sensor & Room Management API
 
-**Module:** 5COSC022W Client-Server Architectures  
-**University:** University of Westminster  
+**Module:** 5COSC022W Client-Server Architectures   
 **Assignment:** Coursework – REST API Design, Development, and Implementation  
 
 ---
